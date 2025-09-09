@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import 'tailwindcss';
 
+*{
+    font-family: 'Open Sans', sans-serif;
+}
 body{
-    background-image: url('/assets/fishingPageBackground.jpeg');
+    /* background-image: url('/assets/fishingPageBackground.jpeg'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
