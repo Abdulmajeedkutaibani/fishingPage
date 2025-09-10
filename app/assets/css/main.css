@@ -2,20 +2,28 @@
 @import 'tailwindcss';
 
 /* Force Segoe UI just on the sign-in page */
-.signIn-page,
-.signIn-page *{
+.signIn-page{
     font-family: "Segoe UI", "Segoe UI Variable", system-ui, -apple-system, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
+    background-image: url('/assets/gradientBackground.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+   
 }
 
-*{
+.login-page{
     font-family: 'Open Sans', sans-serif;
+    background-image: url('/assets/fishingPageBackground.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
+
+
 body{
-    background-image: url('/assets/gradientBackground.svg');
-    background-color: white;
+     background-color: white;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  
 }
 

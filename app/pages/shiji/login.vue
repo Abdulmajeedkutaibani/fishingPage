@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen relative overflow-hidden font-openSans">
+  <div class="min-h-screen relative overflow-hidden font-openSans login-page">
     <!-- Gradient Background -->
     
 
@@ -95,7 +95,7 @@ const isLoggingIn = ref(false);
 
 
 const handleLogin = () => {
-    navigateTo('/signIn');    
+    navigateTo('/shiji/signIn');    
   isLoggingIn.value = true;
   loginMethod.value = 'external';
   console.log('Logging in with external identity provider');
