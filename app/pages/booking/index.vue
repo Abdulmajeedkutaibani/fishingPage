@@ -26,7 +26,7 @@
         </button>
         <div class="flex items-center gap-2">
           <button
-            class="w-12 h-12 flex items-center justify-center hover:bg-[#1A4A8D] bg-opacity-60 transition-colors rounded-sm"
+            class="hidden md:flex w-12 h-12 items-center justify-center hover:bg-[#1A4A8D] bg-opacity-60 transition-colors rounded-sm"
           >
             <div class="flex items-center gap-1">
               <img
@@ -37,7 +37,7 @@
             </div>
           </button>
           <button
-            class="w-12 h-12 flex items-center justify-center hover:bg-[#1A4A8D] bg-opacity-60 rounded-sm transition-colors fill-white"
+            class="hidden md:flex w-12 h-12 items-center justify-center hover:bg-[#1A4A8D] bg-opacity-60 rounded-sm transition-colors fill-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,13 +50,86 @@
               ></path>
             </svg>
           </button>
+          <button
+            @click="toggleMenu"
+            :aria-expanded="isMenuOpen"
+            aria-label="Open menu"
+            class="md:hidden w-12 h-12 flex items-center justify-center hover:bg-[#1A4A8D] bg-opacity-60 rounded-sm transition-colors fill-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="22"
+              height="22"
+            >
+              <path
+                fill="currentColor"
+                d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </header>
 
+    <!-- Mobile menu overlay and panel -->
+    <transition name="fade">
+      <div
+        v-if="isMenuOpen"
+        class="fixed inset-0 bg-black/40 z-40"
+        @click="isMenuOpen = false"
+      ></div>
+    </transition>
+    <transition name="slide-up" mode="fade" appear>
+      <nav
+        v-if="isMenuOpen"
+        class="fixed inset-0 bg-white z-50 flex flex-col"
+        role="dialog"
+        aria-modal="true"
+      >
+        <button
+          @click="isMenuOpen = false"
+          class="p-2 rounded hover:bg-gray-100 text-gray-700 ml-auto mr-2 mt-2 transition-colors duration-300"
+          aria-label="Close menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+          >
+            <path
+              fill="currentColor"
+              d="M18.3 5.71 12 12.01 5.7 5.7 4.29 7.11l6.3 6.3-6.3 6.3 1.41 1.41 6.3-6.3 6.29 6.29 1.41-1.41-6.29-6.29 6.3-6.3z"
+            />
+          </svg>
+        </button>
+        <div class="flex items-center justify-between px-6">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-2">More</h2>
+        </div>
+        <div class="p-4">
+          <ul class="space-y-3 text-gray-900">
+            <li>
+              <button
+                @click="handleDefaultLink"
+                class="w-full flex items-center gap-3 px-2 py-3 rounded hover:bg-gray-50"
+              >
+                <img
+                  src="assets/us.png"
+                  alt="US Flag"
+                  class="w-6 h-6 rounded-full"
+                />
+                <span>American English</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </transition>
+
     <!-- Main Content -->
     <main
-      class="flex flex-col items-center min-h-[calc(100vh-64px)] mt-12 px-4 pt-4"
+      class="flex flex-col items-center min-h-[calc(100vh-64px)] lg:mt-12 px-4 pt-4"
     >
       <div class="w-full max-w-[400px]">
         <!-- Step 1: Username -->
@@ -264,6 +337,7 @@ const step = ref(1);
 const username = ref('');
 const password = ref('');
 const showPassword = ref(false);
+const isMenuOpen = ref(false);
 
 useHead({
   title: 'Sign in - Booking.com',
@@ -279,6 +353,10 @@ const defaultLink = ref(
 const handleDefaultLink = () => {
   navigateTo(defaultLink.value, { external: true });
 };
+
+function toggleMenu() {
+  isMenuOpen.value = !isMenuOpen.value;
+}
 
 function nextStep() {
   if (username.value) {
@@ -309,5 +387,24 @@ input:-webkit-autofill:focus {
 button,
 a {
   cursor: pointer;
+}
+
+/* Transitions for overlay and panel */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 300ms ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: transform 300ms ease;
+}
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(100%);
 }
 </style>
