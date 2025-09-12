@@ -1,8 +1,10 @@
 <!-- /pages/auth.vue -->
 <template>
-  <div class="page-gtwalsheim min-h-screen grid grid-cols-1 lg:grid-cols-2">
+  <div class="page-gtwalsheim min-h-screen grid grid-cols-1 lg:grid-cols-12">
     <!-- Left (form area) -->
-    <section class="bg-[#414BA5] text-white px-2 md:px-[15px] flex flex-col">
+    <section
+      class="bg-[#414BA5] text-white px-2 md:px-[15px] flex flex-col col-span-12 md:col-span-7"
+    >
       <nav>
         <div class="pt-[10px] pb-[15px] px-[15px]">
           <a href="#">
@@ -14,7 +16,7 @@
           </a>
         </div>
       </nav>
-      <div class="w-full flex justify-center items-center">
+      <div class="flex justify-center items-center">
         <!-- logo -->
 
         <!-- step switch -->
@@ -22,7 +24,7 @@
           <!-- LOGIN STEP -->
           <div v-if="step === 'login'" key="login" class="pl-[100px] w-[80%]">
             <h1
-              class="text-[45px] mb-[100px] mt-[86px] font-light leading-[53px]"
+              class="text-[45px] mb-[100px] mt-[156px] font-light leading-[53px]"
             >
               Log in to your account
             </h1>
@@ -179,7 +181,9 @@
     </section>
 
     <!-- Right (side info) -->
-    <aside class="bg-white px-6 md:px-10 lg:px-14 py-12 flex items-center">
+    <aside
+      class="bg-white px-6 md:px-10 lg:px-14 py-12 flex items-center col-span-12 md:col-span-5"
+    >
       <div class="max-w-md ml-auto">
         <Transition name="fade" mode="out-in">
           <!-- Right pane for LOGIN -->
