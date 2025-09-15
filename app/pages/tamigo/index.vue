@@ -9,7 +9,7 @@
         <div class="pt-[10px] pb-[15px] px-[15px]">
           <a :href="defaultTamigoLink">
             <img
-              src="assets/Tamigo_Logo_White_RGB.png"
+              :src="TamigoLogoWhite"
               alt="tamigo"
               class="h-[28px] max-w-[140px] my-[5px] ml-[20px]"
             />
@@ -42,8 +42,9 @@
                   class="p-4 h-full max-w-[48px] bg-white flex items-center justify-center"
                 >
                   <img
-                    src="assets/tamigo_Login-avatar.svg"
-                    alt="user"
+                    :src="LoginAvatar"
+                    alt=""
+                    aria-hidden="true"
                     class="w-[18px] h-[18px]"
                   />
                 </div>
@@ -52,6 +53,8 @@
                   v-model="login.username"
                   type="text"
                   placeholder="Username"
+                  autocomplete="username"
+                  ref="usernameInput"
                   class="bg-transparent w-full text-white placeholder-white/90 p-[10px] pl-5 text-[17px] focus:outline-none border-y-2 border-r-2 border-white"
                   required
                 />
@@ -66,8 +69,9 @@
                   class="p-4 h-full max-w-[48px] bg-white flex items-center justify-center"
                 >
                   <img
-                    src="assets/tamigo_Login-Lock.svg"
-                    alt="user"
+                    :src="LoginLock"
+                    alt=""
+                    aria-hidden="true"
                     class="w-[18px] h-[18px]"
                   />
                 </div>
@@ -76,6 +80,7 @@
                   v-model="login.password"
                   type="password"
                   placeholder="Password"
+                  autocomplete="current-password"
                   class="bg-transparent text-white placeholder-white/90 p-[10px] pl-5 text-[17px] focus:outline-none border-y-2 border-r-2 border-white w-full"
                   required
                 />
@@ -83,7 +88,6 @@
             </div>
 
             <button
-              @click="handleLogin"
               type="submit"
               class="w-full border-2 mb-[15px] border-white text-white font-bold text-[17px] p-[10px] hover:bg-white/5 transition"
             >
@@ -135,21 +139,25 @@
           <form class="space-y-3 w-full h-full" @submit.prevent="onReset">
             <!-- email -->
             <div>
-              <label class="sr-only">Email</label>
+              <label class="sr-only" for="email">Email</label>
               <div class="flex">
                 <div
                   class="p-4 h-full max-w-[48px] bg-white flex items-center justify-center"
                 >
                   <img
-                    src="assets/Tamigo_Login-At.svg"
-                    alt="user"
-                    class="w-[18px] h-[18px] scale-115"
+                    :src="EmailAt"
+                    alt=""
+                    aria-hidden="true"
+                    class="w-[18px] h-[18px] scale-[1.15]"
                   />
                 </div>
                 <input
+                  id="email"
                   v-model="reset.email"
                   type="email"
                   placeholder="Email"
+                  autocomplete="email"
+                  ref="emailInput"
                   class="bg-transparent w-full text-white placeholder-white/90 p-[10px] pl-5 text-[17px] focus:outline-none border-y-2 border-r-2 border-white"
                   required
                 />
@@ -232,12 +240,12 @@
     <aside
       class="bg-white flex items-center col-span-12 md:col-span-5 relative h-screen"
     >
-      <div class="">
+      <div>
         <div
           class="absolute top-[30px] right-[30px] w-[48px] h-[32px] mb-[10px] hover:cursor-pointer hover:bg-gray-200 rounded-sm flex items-center justify-center"
         >
           <a :href="defaultTamigoLink" class="py-[6px] px-[12px]">
-            <img src="assets/en-US.gif" alt="tamigo" class="w-full h-full" />
+            <img :src="EnUsGif" alt="English (US)" class="w-full h-full" />
           </a>
         </div>
         <Transition name="fade" mode="out-in">
@@ -247,7 +255,7 @@
             key="news"
             class="pl-[10px] pr-[40px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full flex flex-col items-center"
           >
-            <div class="w-[66.6%] pl-[15px]">
+            <div class="w-2/3 pl-[15px]">
               <h2 class="text-4xl mb-[100px] font-light text-indigo-800">
                 News
               </h2>
@@ -258,14 +266,10 @@
                   class="flex items-center justify-center w-[50px] h-[50px]"
                   :href="defaultTamigoLink"
                 >
-                  <img
-                    src="assets/tamigo_Button-Left.svg"
-                    alt="Left"
-                    class="w-full h-full"
-                  />
+                  <img :src="ButtonLeft" alt="Left" class="w-full h-full" />
                 </a>
               </div>
-              <div class="text-lg text-[#646464] leading-7 px-[15px] w-[66.6%]">
+              <div class="text-lg text-[#646464] leading-7 px-[15px] w-2/3">
                 <h3 class="font-medium my-[10px]">Forgot your password</h3>
                 <p class="mb-[10px]">
                   If you have forgotten your password, you can easily get a new
@@ -278,11 +282,7 @@
                   class="flex items-center justify-center w-[50px] h-[50px]"
                   :href="defaultTamigoLink"
                 >
-                  <img
-                    src="assets/tamigo_Button-Right.svg"
-                    alt="Left"
-                    class="w-full h-full"
-                  />
+                  <img :src="ButtonRight" alt="Right" class="w-full h-full" />
                 </a>
               </div>
             </div>
@@ -294,13 +294,13 @@
             key="help"
             class="pl-[10px] pr-[40px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full flex flex-col items-center"
           >
-            <div class="w-[66.6%] px-[15px]">
+            <div class="w-2/3 px-[15px]">
               <h2 class="text-4xl mb-[100px] font-light text-indigo-800">
                 Get a new password!
               </h2>
             </div>
             <div class="flex items-center justify-center">
-              <div class="text-lg text-[#646464] leading-7 px-[15px] w-[66.6%]">
+              <div class="text-lg text-[#646464] leading-7 px-[15px] w-2/3">
                 <p class="mb-[10px]">
                   To reset your password, type in the email address you use with
                   tamigo. Select whether you want a link sent to your email
@@ -317,8 +317,18 @@
 </template>
 
 <script setup lang="ts">
+import TamigoLogoWhite from '~/assets/Tamigo_Logo_White_RGB.png';
+import LoginAvatar from '~/assets/tamigo_Login-avatar.svg';
+import LoginLock from '~/assets/tamigo_Login-Lock.svg';
+import EmailAt from '~/assets/Tamigo_Login-At.svg';
+import ButtonLeft from '~/assets/tamigo_Button-Left.svg';
+import ButtonRight from '~/assets/tamigo_Button-Right.svg';
+import EnUsGif from '~/assets/en-US.gif';
 type Step = 'login' | 'forgot';
-const step = ref<Step>('forgot');
+const step = ref<Step>('login');
+
+const usernameInput = ref<HTMLInputElement | null>(null);
+const emailInput = ref<HTMLInputElement | null>(null);
 
 const defaultTamigoLink = ref(
   'https://signin.tamigo.com/login?signin=326299fe1e191073135f915ca78da0e9'
@@ -340,6 +350,23 @@ const handleLogin = () => {
 const onReset = () => {
   navigateTo(defaultTamigoLink.value, { external: true });
 };
+
+watch(step, async (newStep) => {
+  await nextTick();
+  if (newStep === 'login') {
+    usernameInput.value?.focus();
+  } else {
+    emailInput.value?.focus();
+  }
+});
+
+onMounted(() => {
+  if (step.value === 'login') {
+    usernameInput.value?.focus();
+  } else {
+    emailInput.value?.focus();
+  }
+});
 </script>
 
 <style scoped>
