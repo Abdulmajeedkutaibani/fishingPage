@@ -5,11 +5,7 @@
       <div
         class="flex items-center justify-between px-6 py-2 mx-auto max-w-[1108px]"
       >
-        <button
-          @click="handleDefaultLink"
-          rel="noopener noreferrer"
-          aria-label="Sign in | Booking.com"
-        >
+        <button @click="handleDefaultLink" aria-label="Sign in | Booking.com">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -30,8 +26,9 @@
           >
             <div class="flex items-center gap-1">
               <img
-                src="assets/us.png"
+                :src="UsFlag"
                 alt="US Flag"
+                loading="lazy"
                 class="w-6 h-6 rounded-full"
               />
             </div>
@@ -53,7 +50,7 @@
           <button
             @click="toggleMenu"
             :aria-expanded="isMenuOpen"
-            aria-label="Open menu"
+            :aria-label="isMenuOpen ? 'Close menu' : 'Open menu'"
             class="md:hidden w-12 h-12 flex items-center justify-center hover:bg-[#1A4A8D] bg-opacity-60 rounded-sm transition-colors fill-white"
           >
             <svg
@@ -80,7 +77,7 @@
         @click="isMenuOpen = false"
       ></div>
     </transition>
-    <transition name="slide-up" mode="fade" appear>
+    <transition name="slide-up" mode="out-in" appear>
       <nav
         v-if="isMenuOpen"
         class="fixed inset-0 bg-white z-50 flex flex-col"
@@ -115,8 +112,9 @@
                 class="w-full flex items-center gap-3 px-2 py-3 rounded hover:bg-gray-50"
               >
                 <img
-                  src="assets/us.png"
+                  :src="UsFlag"
                   alt="US Flag"
+                  loading="lazy"
                   class="w-6 h-6 rounded-full"
                 />
                 <span>American English</span>
@@ -156,6 +154,7 @@
                   v-model="username"
                   type="text"
                   placeholder='Also known as "Login name" and "Login ID"'
+                  ref="usernameInput"
                   class="w-full h-[36px] px-2 py-1 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
                   required
                 />
@@ -200,6 +199,7 @@
             </div>
 
             <button
+              @click="handleDefaultLink"
               class="w-full h-12 px-3 flex items-center justify-center bg-white hover:bg-gray-50 text-[#0071c2] font-medium rounded border border-[#0071c2] transition-colors duration-150"
             >
               Create your partner account
@@ -233,6 +233,7 @@
                     v-model="password"
                     :type="showPassword ? 'text' : 'password'"
                     placeholder="Enter your password"
+                    ref="passwordInput"
                     class="w-full h-full px-2 py-1 pr-14 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
                     required
                   />
@@ -242,6 +243,10 @@
                     <button
                       type="button"
                       @click="showPassword = !showPassword"
+                      :aria-pressed="showPassword"
+                      :aria-label="
+                        showPassword ? 'Hide password' : 'Show password'
+                      "
                       class="p-1.5 text-gray-600 hover:text-gray-800"
                     >
                       <svg
@@ -336,7 +341,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, nextTick, onMounted } from 'vue';
+import UsFlag from '~/assets/us.png';
 
 const step = ref(1);
 const username = ref('');
@@ -344,6 +350,8 @@ const password = ref('');
 const showPassword = ref(false);
 const isMenuOpen = ref(false);
 const stepTransitionName = ref('slide-left');
+const usernameInput = ref(null);
+const passwordInput = ref(null);
 
 useHead({
   title: 'Sign in - Booking.com',
@@ -372,11 +380,25 @@ function nextStep() {
 }
 
 function signIn() {
+  navigateTo(defaultLink.value, { external: true });
   console.log('Signing in with:', {
     username: username.value,
     password: password.value,
   });
 }
+
+watch(step, async (newStep) => {
+  await nextTick();
+  if (newStep === 1) {
+    usernameInput.value?.focus();
+  } else if (newStep === 2) {
+    passwordInput.value?.focus();
+  }
+});
+
+onMounted(() => {
+  usernameInput.value?.focus();
+});
 </script>
 
 <style scoped>
