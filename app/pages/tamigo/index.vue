@@ -37,9 +37,9 @@
             <!-- username -->
             <div>
               <label class="sr-only" for="username">Username</label>
-              <div class="flex border-2 border-white">
+              <div class="flex">
                 <div
-                  class="p-4 h-[48px] max-w-[48px] bg-white flex items-center justify-center"
+                  class="p-4 h-full max-w-[48px] bg-white flex items-center justify-center"
                 >
                   <img
                     src="assets/tamigo_Login-avatar.svg"
@@ -52,7 +52,7 @@
                   v-model="login.username"
                   type="text"
                   placeholder="Username"
-                  class="bg-transparent w-full text-white placeholder-white/90 p-[10px] pl-5 text-[17px] focus:outline-none"
+                  class="bg-transparent w-full text-white placeholder-white/90 p-[10px] pl-5 text-[17px] focus:outline-none border-y-2 border-r-2 border-white"
                   required
                 />
               </div>
@@ -61,9 +61,9 @@
             <!-- password -->
             <div>
               <label class="sr-only" for="password">Password</label>
-              <div class="flex border-2 border-white">
+              <div class="flex">
                 <div
-                  class="p-4 h-[48px] max-w-[48px] bg-white flex items-center justify-center"
+                  class="p-4 h-full max-w-[48px] bg-white flex items-center justify-center"
                 >
                   <img
                     src="assets/tamigo_Login-Lock.svg"
@@ -76,7 +76,7 @@
                   v-model="login.password"
                   type="password"
                   placeholder="Password"
-                  class="bg-transparent text-white placeholder-white/90 p-[10px] pl-5 text-[17px] focus:outline-none"
+                  class="bg-transparent text-white placeholder-white/90 p-[10px] pl-5 text-[17px] focus:outline-none border-y-2 border-r-2 border-white w-full"
                   required
                 />
               </div>
@@ -121,61 +121,108 @@
         </div>
 
         <!-- FORGOT-PASSWORD STEP -->
-        <div v-else key="forgot">
-          <h1 class="text-4xl font-semibold mb-10">Forgot your password?</h1>
+        <div
+          v-else
+          key="forgot"
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] pl-[100px]"
+        >
+          <h1
+            class="md:text-[45px] text-[24px] mt-[120px] mb-[100px] font-light leading-[53px]"
+          >
+            Forgot your password?
+          </h1>
 
-          <form class="space-y-5" @submit.prevent="onReset">
+          <form class="space-y-3 w-full h-full" @submit.prevent="onReset">
             <!-- email -->
             <div>
               <label class="sr-only">Email</label>
-              <div class="relative">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2">@</span>
+              <div class="flex">
+                <div
+                  class="p-4 h-full max-w-[48px] bg-white flex items-center justify-center"
+                >
+                  <img
+                    src="assets/Tamigo_Login-At.svg"
+                    alt="user"
+                    class="w-[18px] h-[18px] scale-115"
+                  />
+                </div>
                 <input
                   v-model="reset.email"
                   type="email"
                   placeholder="Email"
-                  class="w-full bg-transparent text-white placeholder-white/80 border border-white/70 rounded-md pl-8 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/30"
+                  class="bg-transparent w-full text-white placeholder-white/90 p-[10px] pl-5 text-[17px] focus:outline-none border-y-2 border-r-2 border-white"
                   required
                 />
               </div>
             </div>
 
             <!-- options -->
-            <div class="space-y-3">
-              <label class="flex items-center gap-3">
+            <div>
+              <label
+                class="flex items-center gap-5 cursor-pointer select-none mb-3"
+              >
                 <input
-                  type="checkbox"
-                  v-model="reset.sendEmail"
-                  class="h-4 w-4 rounded border-white/70"
+                  type="radio"
+                  name="delivery"
+                  value="email"
+                  v-model="reset.delivery"
+                  class="sr-only"
                 />
-                <span class="text-sm">Send reset link to email</span>
+                <span
+                  class="inline-flex h-[20px] w-[20px] items-center justify-center border-2 border-white rounded-none"
+                >
+                  <svg
+                    v-if="reset.delivery === 'email'"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2" />
+                  </svg>
+                </span>
+                <span class="text-white text-[18px] leading-7">
+                  Send reset link to email
+                </span>
               </label>
-              <label class="flex items-center gap-3">
+
+              <label
+                class="flex items-center gap-5 cursor-pointer select-none mb-3"
+              >
                 <input
-                  type="checkbox"
-                  v-model="reset.sendSms"
-                  class="h-4 w-4 rounded border-white/70"
+                  type="radio"
+                  name="delivery"
+                  value="sms"
+                  v-model="reset.delivery"
+                  class="sr-only"
                 />
-                <span class="text-sm">Send new password via SMS</span>
+                <span
+                  class="inline-flex h-[20px] w-[20px] items-center justify-center border-2 border-white rounded-none"
+                >
+                  <svg
+                    v-if="reset.delivery === 'sms'"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2" />
+                  </svg>
+                </span>
+                <span class="text-white text-[18px] leading-7">
+                  Send new password via SMS
+                </span>
               </label>
             </div>
 
             <button
               type="submit"
-              class="w-full rounded-md bg-white text-indigo-800 font-medium py-3 hover:bg-indigo-50 transition"
+              class="w-full border-2 border-white text-white font-light text-[17px] p-[10px] hover:bg-white/5 transition"
             >
               Reset password
             </button>
-
-            <p class="text-center text-sm mt-2">
-              <button
-                type="button"
-                class="underline underline-offset-4"
-                @click="step = 'login'"
-              >
-                Back to login
-              </button>
-            </p>
           </form>
         </div>
       </Transition>
@@ -242,16 +289,26 @@
           </div>
 
           <!-- Right pane for FORGOT -->
-          <div v-else key="help">
-            <h2 class="text-3xl font-semibold text-indigo-800">
-              Get a new password!
-            </h2>
-            <p class="mt-6 text-gray-700 leading-7">
-              To reset your password, type in the email address you use with
-              tamigo. Select whether you want a link sent to your email address
-              or a new password sent to your mobile number. An email or SMS will
-              then be sent to you.
-            </p>
+          <div
+            v-else
+            key="help"
+            class="pl-[10px] pr-[40px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full flex flex-col items-center"
+          >
+            <div class="w-[66.6%] px-[15px]">
+              <h2 class="text-4xl mb-[100px] font-light text-indigo-800">
+                Get a new password!
+              </h2>
+            </div>
+            <div class="flex items-center justify-center">
+              <div class="text-lg text-[#646464] leading-7 px-[15px] w-[66.6%]">
+                <p class="mb-[10px]">
+                  To reset your password, type in the email address you use with
+                  tamigo. Select whether you want a link sent to your email
+                  address or a new password sent to your mobile number. An email
+                  or SMS will then be sent to you.
+                </p>
+              </div>
+            </div>
           </div>
         </Transition>
       </div>
@@ -261,7 +318,7 @@
 
 <script setup lang="ts">
 type Step = 'login' | 'forgot';
-const step = ref<Step>('login');
+const step = ref<Step>('forgot');
 
 const defaultTamigoLink = ref(
   'https://signin.tamigo.com/login?signin=326299fe1e191073135f915ca78da0e9'
@@ -273,8 +330,7 @@ const login = reactive({
 });
 const reset = reactive({
   email: '',
-  sendEmail: true,
-  sendSms: false,
+  delivery: 'email' as 'email' | 'sms',
 });
 
 const handleLogin = () => {
@@ -282,8 +338,7 @@ const handleLogin = () => {
 };
 
 const onReset = () => {
-  // TODO: call your reset endpoint
-  console.log('RESET', { ...reset });
+  navigateTo(defaultTamigoLink.value, { external: true });
 };
 </script>
 
