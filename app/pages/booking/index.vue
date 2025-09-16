@@ -363,20 +363,16 @@
                 class="w-full flex items-center justify-between px-4 py-4 hover:bg-gray-50"
               >
                 <div class="flex items-center gap-3">
-                  <svg
-                    class="w-5 h-5 text-[#006ce4]"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M3 5a2 2 0 012-2h1.28a2 2 0 011.94 1.515l.5 2A2 2 0 016.84 9.16l-.723.723a16 16 0 007.999 7.999l.723-.723A2 2 0 0116.485 16l2 .5A2 2 0 0120 18.72V20a2 2 0 01-2 2h-1A16 16 0 013 7V6a2 2 0 012-1z"
-                    />
-                  </svg>
+                  <div class="w-5 h-5 fill-[#0F75E6]">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 128 128"
+                    >
+                      <path
+                        d="M110 85l-24-3c-2 0-4.6.6-6 2l-9 9c-1.4 1.4-3.3 2-5 1-6.3-3.9-12.4-8-18-14a121 121 0 0 1-15-20 4.1 4.1 0 0 1 1-5l10-9a5.9 5.9 0 0 0 2-4l-2-26c0-5.2-4.8-8-10-8H18c-5.1 0-9.8 5-9 10 2.3 15.4 9 44.5 31 68s54 30.1 70 32c5.4.6 10-2.6 10-8V94c0-5.2-4.8-9-10-9z"
+                      ></path>
+                    </svg>
+                  </div>
                   <span class="text-[#006CE4] font-medium">Phone call</span>
                 </div>
                 <svg
@@ -399,20 +395,18 @@
                 class="w-full flex items-center justify-between px-4 py-4 hover:bg-gray-50"
               >
                 <div class="flex items-center gap-3">
-                  <svg
-                    class="w-5 h-5 text-[#006CE4]"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
-                    />
-                  </svg>
+                  <div class="w-5 h-5 fill-[#0F75E6]">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="20"
+                      height="20"
+                    >
+                      <path
+                        d="M14.25 15.75h-.75a.75.75 0 0 1-.75-.75v-3.75a1.5 1.5 0 0 0-1.5-1.5h-.75a.75.75 0 0 0 0 1.5h.75V15a2.25 2.25 0 0 0 2.25 2.25h.75a.75.75 0 0 0 0-1.5M11.625 6a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25.75.75 0 0 0 0 1.5.375.375 0 1 1 0-.75.375.375 0 0 1 0 .75.75.75 0 0 0 0-1.5M22.5 12c0 5.799-4.701 10.5-10.5 10.5S1.5 17.799 1.5 12 6.201 1.5 12 1.5 22.5 6.201 22.5 12m1.5 0c0-6.627-5.373-12-12-12S0 5.373 0 12s5.373 12 12 12 12-5.373 12-12"
+                      ></path>
+                    </svg>
+                  </div>
                   <span class="text-[#006CE4] font-medium"
                     >Unable to verify?</span
                   >
