@@ -596,7 +596,6 @@ const stepTransitionName = ref('slide-left');
 const usernameInput = ref(null);
 const passwordInput = ref(null);
 const showPulseBanner = ref(true);
-const phoneNumbers = ref(['+1 202-555-0132', '+1 202-555-0175']);
 const selectedPhone = ref('');
 const verificationCode = ref('');
 const codeInput = ref(null);
