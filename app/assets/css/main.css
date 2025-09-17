@@ -24,6 +24,14 @@
   background-repeat: no-repeat;
 }
 
+.afas-page {
+  font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
+  background-image: url('/assets/Patroon.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 body {
   background-color: white;
   background-size: cover;
