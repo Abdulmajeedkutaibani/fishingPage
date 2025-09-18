@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen relative overflow-hidden font-openSans login-page">
+  <div class="min-h-screen relative overflow-hidden font-openSans login-page openSans">
     <!-- Gradient Background -->
     
 
